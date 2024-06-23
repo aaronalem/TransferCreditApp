@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2 class="display-4 text-center mt-5 mb-4">Make a Request</h2>
+    <form class="container-fluid d-flex flex-column align-items-center mt-3">
+        <div class="row w-75 d-flex justify-content-center align-items-center">
+            <div class="col-2 text-end">
+                <label for="uva-course-name">UVA Course Name:</label>
+            </div>
+            <div class="col-2">
+                <input type="text"
+                       class="form-control"
+                       id="uva-course-name"
+                       placeholder="Advanced Software Development"/>
+            </div>
+            <div class="col-2 text-end">
+                <label for="uva-course-name">UVA Department:</label>
+            </div>
+            <div class="col-2">
+                <input type="text"
+                       class="form-control"
+                       id="uva-course-name"
+                       placeholder="CS"/>
+            </div>
+            <div class="col-2 text-end">
+                <label for="uva-course-name">UVA Course Number:</label>
+            </div>
+            <div class="col-2">
+                <input type="text"
+                       class="form-control"
+                       id="uva-course-name"
+                       placeholder="3240"/>
+            </div>
+        </div>
+        <hr class="border border-secondary w-75 border-1 opacity-50">
+        <div class="row w-75 gy-3 d-flex justify-content-center align-items-center">
+            <div class="col-2 text-end">
+                <label for="other-school">Other School Course Name:</label>
+            </div>
+            <div class="col-2">
+                <input type="text"
+                       class="form-control"
+                       id="other-school"
+                       placeholder="Software Engineering"/>
+            </div>
+            <div class="col-2 text-end">
+                <label for="other-school">Other School Department:</label>
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" id="other-school" placeholder="CES" />
+            </div>
+            <div class="col-2 text-end">
+                <label for="other-school">Other School Course Number:</label>
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" id="other-school" placeholder="303" />
+            </div>
+            <div class="col-2 text-end">
+                <label for="other-school">Other School:</label>
+            </div>
+            <div class="col-2">
+                <input type="text"
+                       class="form-control"
+                       id="other-school"
+                       placeholder="Cornell University"/>
+            </div>
+            <div class="col-2 text-end">
+                <label for="other-school">Other School Course URL:</label>
+            </div>
+            <div class="col-2">
+                <input type="text"
+                       class="form-control"
+                       id="other-school"
+                       placeholder="https://courses.cornell.edu/preview_course_nopop.php?catoid=52&coid=925846"/>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+    </form>
+{% endblock content %}

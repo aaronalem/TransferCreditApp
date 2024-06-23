@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+{% extends "socialaccount/base.html" %}
+{% load bootstrap5 %}
+{% load socialaccount %}
+{% block head_title %}
+    Transfer Guide | Equivalency Search
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'user_dashboard.css' %}">
+    <script src="{% static 'user_dashboard.js' %}"></script>
+    <div class="content m-4">
+        <h2 class="display-4 ms-3">Equivalency Search</h2>
+        <form action="{% url 'equivalencies' %}" method="get" autocomplete="off">
+            <fieldset class="form-group m-3 p-4 shadow rounded">
+                <legend>
+                    UVA Course
+                </legend>
+                <div class = "row">
+                    <div class="col-6">
+                        <div class="autocomplete col-6">
+                            <label for="search">Course Name (e.g., CS 3240)</label>
+                            <input id="search"
+                                   type="text"
+                                   name="course"
+                                   placeholder="Course Name"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class = "row">
+                    <div class="col-6">
+                        <label for="uva_course_description">UVA Course Description (can be substring)</label>
+                        <input id="uva_course_description"
+                               type="text"
+                               name="uva_course_description"
+                               placeholder="UVA Course Description"
+                               class="form-control"/>
+                    </div>
+                    <div class="col-6">
+                        <label for="uva_course_credits">UVA Course Credits</label>
+                        <input id="uva_course_credits"
+                               type="number"
+                               name="uva_course_credits"
+                               placeholder="Credits"
+                               class="form-control"/>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="form-group m-3 p-4 shadow rounded">
+                <legend>
+                    Transfer Course
+                </legend>
+                <div class = "row">
+                    <div class="col-6">
+                        <label for="foreign_school_name">Transfer School Name (can be substring)</label>
+                        <input id="foreign_school_name"
+                               type="text"
+                               name="foreign_school_name"
+                               placeholder="Transfer School Name"
+                               class="form-control"/>
+                    </div>
+                    <div class="col-6">
+                        <label for="foreign_course">Transfer Course Name (e.g., CS 1110)</label>
+                        <input id="foreign_course"
+                               type="text"
+                               name="foreign_course"
+                               placeholder="Transfer Course Name"
+                               class="form-control"/>
+                    </div>
+                </div>
+                <div class = "row">
+                    <div class="col-6">
+                        <label for="foreign_description">Transfer Course Description (can be substring)</label>
+                        <input id="foreign_description"
+                               type="text"
+                               name="foreign_description"
+                               placeholder="Transfer Course Description"
+                               class="form-control"/>
+                    </div>
+                    <div class="col-6">
+                        <label for="foreign_credits">Transfer Course Credits</label>
+                        <input id="foreign_credits"
+                               type="number"
+                               name="foreign_credits"
+                               placeholder="Transfer Course Credits"
+                               class="form-control"/>
+                    </div>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary ms-3">Submit</button>
+        </form>
+    </div>
+    <script>
+      var deps = {{courses|safe}};
+      autocomplete(document.getElementById("search"), deps);
+    </script>
+{% endblock content %}

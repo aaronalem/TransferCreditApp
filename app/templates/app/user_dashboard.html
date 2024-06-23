@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% extends "socialaccount/base.html" %}
+{% load socialaccount %}
+
+{% block head_title %}
+    Transfer Guide | User Dashboard
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid d-flex flex-column align-items-center">
+        <h2 class="display-4 text-center mt-5 mb-4">User Dashboard</h2>
+        <p>Welcome to your dashboard, {{ user.username }}! Use the links at the top of the page to navigate the site.</p>
+    </div>
+{% endblock content %}

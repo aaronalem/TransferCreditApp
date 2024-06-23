@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block content %}
+    <nav class="d-flex justify-content-center mt-3 border-2">
+        <div class="nav nav-tabs w-75 justify-content-center"
+             id="nav-tab"
+             role="tablist">
+            <button class="nav-link active"
+                    id="nav-home-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-home"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-home"
+                    aria-selected="true">
+                UVA to Other
+            </button>
+            <button class="nav-link"
+                    id="nav-profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-profile"
+                    aria-selected="false">
+                Other to UVA
+            </button>
+        </div>
+    </nav>
+    <div class="tab-content d-flex justify-content-center mt-4"
+         id="nav-tabContent">
+        <div class="tab-pane active w-100"
+             id="nav-home"
+             role="tabpanel"
+             aria-labelledby="nav-home-tab"
+             tabindex="0">
+            <form name="UVAToOther"
+                  class="container-fluid d-flex flex-column align-items-center justify-content-center mt-3"
+                  method="get"
+				  action="{% url 'dashboard' %}">
+                <div class="row w-100 g-3 justify-content-center align-items-center my-1">
+                    <div class="col-6 text-end">
+                        <label for="uva-department">UVA Department:</label>
+                    </div>
+                    <div class="col-2 me-auto">
+                        <input type="text"
+                               class="form-control"
+                               name="uva-department"
+                               placeholder="CS"/>
+                    </div>
+                </div>
+                <div class="row w-100 g-3 justify-content-center align-items-center my-1">
+                    <div class="col-6 text-end">
+                        <label for="uva-course-num">UVA Course Number:</label>
+                    </div>
+                    <div class="col-2 me-auto">
+                        <input type="text"
+                               class="form-control"
+                               name="uva-course-num"
+                               placeholder="3240"/>
+                    </div>
+                </div>
+                <div class="row w-100 g-3 justify-content-center align-items-center my-1">
+                    <div class="col-6 text-end">
+                        <label for="uva-course-name">UVA Course Name:</label>
+                    </div>
+                    <div class="col-2 me-auto">
+                        <input type="text"
+                               class="form-control"
+                               name="uva-course-name"
+                               placeholder="Advanced Software Development"/>
+                    </div>
+                </div>
+                <div class="row w-100 g-3 justify-content-center align-items-center my-1">
+                    <div class="col-6 text-end">
+                        <label for="other-school">Other School:</label>
+                    </div>
+                    <div class="col-2 me-auto">
+                        <input type="text"
+                               class="form-control"
+                               name="other-school"
+                               placeholder="Cornell University"/>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-4">Submit</button>
+            </form>
+        </div>
+        <div class="tab-pane w-100"
+             id="nav-profile"
+             role="tabpanel"
+             aria-labelledby="nav-profile-tab"
+             tabindex="0">
+            <form name="OtherToUVA"
+                  class="container-fluid d-flex flex-column align-items-center justify-content-center mt-3"
+                  method="get">
+                <div class="row w-100 g-3 justify-content-center align-items-center my-1">
+                    <div class="col-6 text-end">
+                        <label for="other-school">Other School:</label>
+                    </div>
+                    <div class="col-2 me-auto">
+                        <input type="text"
+                               class="form-control"
+                               id="other-school"
+                               placeholder="Cornell"/>
+                    </div>
+                </div>
+                <div class="row w-100 g-3 justify-content-center align-items-center my-1">
+                    <div class="col-6 text-end">
+                        <label for="other-department">Other Department:</label>
+                    </div>
+                    <div class="col-2 me-auto">
+                        <input type="text"
+                               class="form-control"
+                               id="other-department"
+                               placeholder="CES"/>
+                    </div>
+                </div>
+                <div class="row w-100 g-3 justify-content-center align-items-center my-1">
+                    <div class="col-6 text-end">
+                        <label for="other-course-num">Other Course Number:</label>
+                    </div>
+                    <div class="col-2 me-auto">
+                        <input type="text"
+                               class="form-control"
+                               id="other-course-num"
+                               placeholder="303"/>
+                    </div>
+                </div>
+                <div class="row w-100 g-3 justify-content-center align-items-center my-1">
+                    <div class="col-6 text-end">
+                        <label for="other-course-name">Other Course Name:</label>
+                    </div>
+                    <div class="col-2 me-auto">
+                        <input type="text"
+                               class="form-control"
+                               id="other-course-name"
+                               placeholder="Software Engineering"/>
+                    </div>
+                </div>
+                <button type="submit" for="OtherToUVA" class="btn btn-primary mt-4">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

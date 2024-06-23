@@ -1,0 +1,53 @@
+{% extends "socialaccount/base.html" %}
+{% load socialaccount %}
+{% load tz %}
+
+{% block head_title %}
+    Transfer Guide | Course Information
+{% endblock %}
+
+{% block content %}
+<div class = "container">
+    {% if courseinfo.description %}
+        <h1 class="display-4 pt-3">Offerings for {{ courseinfo.department }} {{ courseinfo.catalog_number }}</h1>
+        <h3 class="pt-2 pb-3">{{ courseinfo.description }}</h3>
+        <div class = "table-responsive card">
+        <table class="table table-striped">
+            <thead class="changecolor">
+                <tr>
+                    <th scope="col">Section Type</th>
+                    <th scope="col">Instructor(s)</th>
+                    <th scope="col">Enrollment</th>
+                    <th scope="col">Waitlist</th>
+                    <th scope="col">Meeting Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for offering in offerings %}
+                    <tr>
+                        <td scope="row">{{ offering.section_type }} ({{ offering.instruction_mode_description }})</td>
+                        <td scope="row">
+                            {% comment %} https://stackoverflow.com/questions/32638205/django-concat-string-with-comma-in-template for commas in list {% endcomment %}
+                            {% for instructor in offering.instructors %}
+                                <a href="mailto: {{ instructor.email }}">{{ instructor.name }}</a>
+                            {% endfor %}
+                        </td>
+                        <td scope="row">{{ offering.enrollment }} / {{ offering.capacity }}</td>
+                        <td scope="row">{{ offering.waitlist }} / {{ offering.waitlist_cap }}</td>
+                        <td scope="row">
+                            {% for meeting in offering.meetings %}
+                                <p>{{ meeting.days }}</p>
+                                <p>{{ meeting.start_time|date:"h:i A" }}-{{ meeting.end_time|date:"h:i A" }}</p>
+                                <p>{{ meeting.facility_descr }} {% if not forloop.last %} | {% endif %}</p>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <h1 class="pt-3">No data on offerings for {{ courseinfo.department }} {{ courseinfo.catalog_number }} available for this semester.</h1>
+    {% endif %}
+    </div>
+{% endblock content %}

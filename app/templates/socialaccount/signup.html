@@ -1,0 +1,37 @@
+{% extends "socialaccount/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div class="content m-4">
+    <h1 class="display-4 mb-4">{% trans "Sign Up" %}</h1>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'user_dashboard.css' %}">
+    <p><strong>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
+    the Transfer Guide site. As a final step, please complete the following form:{% endblocktrans %}</strong></p>
+
+    <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+        <fieldset class="form-group m-3 p-4 shadow rounded">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6" style="display: none;">
+                <label for="id_email">Email</label>
+                    {{ form.email }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label for="id_username">Username</label>
+                <input type="text" name="username" placeholder="Username" autocomplete="username" minlength="1" maxlength="150" required="" id="id_username" class="form-control" />
+            </div>
+        </div>
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button type="submit" class="btn btn-primary">{% trans "Sign Up" %} &raquo;</button>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

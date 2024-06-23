@@ -1,0 +1,77 @@
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+{% extends "socialaccount/base.html" %}
+{% load socialaccount %}
+
+{% block head_title %}
+    Transfer Guide | Review Transfer Equivalency Request
+{% endblock %}
+
+{%block content%}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'viewrequest.css' %}">
+  <div class="container">
+    <h1 class="display-4 mt-3 mb-3">Review Transfer Equivalency Request</h1>
+    <div class="table-responsive card">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                  <th scope="col">Student</th>
+                  <td>{{request.user.username}}</td>
+                </tr>
+                <tr>
+                  <th scope="col">UVA Course</th>
+                  <td><a href="{% url 'viewcourseinfo' request.uva_course.department request.uva_course.catalog_number %}">{{request.uva_course.department}} {{request.uva_course.catalog_number}}</a></td>
+                </tr>
+                <tr>
+                  <th scope="col">Transfer School</th>
+                  <td>{{request.foreign_school}}</td>
+                </tr>
+                <tr>
+                  <th scope="col">Transfer Course</th>
+                  <td>{{request.foreign_course_department}} {{request.foreign_course_catalog_number}}</td>
+                </tr>
+                <tr>
+                  <th scope="col">Transfer Course Credits</th>
+                  <td>{{request.foreign_course_credits}}</td>
+                </tr>
+                <tr>
+                  <th scope="col">Transfer Course URL</th>
+                  <td>{{request.foreign_course_url}}</td>
+                </tr>
+                <tr>
+                  <th scope="col">Transfer Course Description</th>
+                  <td>{{request.foreign_course_description}}</td>                  
+                </tr>
+                <tr>
+                  <th scope="col">Current Status</th>
+                    {% if request.status == 'APPROVED' %}
+                        <td><p class="badge text-bg-success">Approved</p></td>
+                    {% elif request.status == 'UNDER_REVIEW' %}
+                        <td><p class="badge text-bg-warning">Under Review</p></td>
+                    {% else %}
+                        <td><p class="badge text-bg-danger">Denied</p></td>
+                    {% endif %}            
+                </tr>
+                <tr>
+                  <th scope="col">Review Comments</th>
+                  <td>{{request.comment}}</td>                  
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% if user.profile.is_admin and request.status == "UNDER_REVIEW" %}
+      <form action="{% url 'update_request'%}" method = "post">
+        {% csrf_token %}
+          <textarea class="form-control" name="comment" id="comment" rows="4" placeholder="Review Comments" maxlength=500></textarea>
+          <input type="hidden" id="id" name="id" value="{{request.id}}"/>
+          <div class="btns">
+            <button type="submit" name="action" value="APPROVED" class="btn btn-success">Approve</button>
+            <button type="submit" name="action" value="DENIED" class="btn btn-danger">Deny</button>
+          </div>
+      </form>
+    {% endif %}
+    </div>
+
+{%endblock content%}

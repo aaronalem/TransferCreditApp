@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+{% extends "socialaccount/base.html" %}
+{% load socialaccount %}
+
+{% block head_title %}
+    Transfer Guide | Equivalency Request Form
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'user_dashboard.css' %}">
+    <script src="{% static 'user_dashboard.js' %}"></script>
+    <div class="content m-4">
+        <h2 class="display-4 ms-3">Request Equivalency</h2>
+        <p class="ms-3">Please fill out the fields below to request a new equivalency.</p>
+        {% if error_message %}
+            <p>
+                <strong>{{ error_message }}</strong>
+            </p>
+        {% endif %}
+        <form action="{% url 'addRequest' %}" method="post" autocomplete="off">
+            {% csrf_token %}
+            <fieldset class="form-group m-3 p-4 shadow rounded">
+                <legend>
+                    UVA Course Information
+                </legend>
+                <div class = "row">
+                    <div class="col-6">
+                        <div class="autocomplete">
+                            <label for="uvaCourse">Course Name (Department + Catalog Number, e.g., CS 3240)</label>
+                            <input id="uvaCourse"
+                                   type="text"
+                                   name="uvaCourse"
+                                   placeholder="Course Name"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="form-group m-3 p-4 shadow rounded">
+                <legend>
+                    Transfer Course Information
+                </legend>
+                <div class = "row">
+                    <div class="col-6">
+                        <label for="foreign_school_name">Transfer School Name</label>
+                        <input id="foreignSchool"
+                               type="text"
+                               name="foreignSchool"
+                               placeholder="Transfer School Name"
+                               class="form-control"/>
+                    </div>
+                    <div class="col-6">
+                        <label for="foreignCourse">Transfer Course Name (Department + Catalog Number, e.g., CS 3240)</label>
+                        <input id="foreignCourse"
+                               type="text"
+                               name="foreignCourse"
+                               placeholder="Transfer Course Name"
+                               class="form-control"/>
+                    </div>
+                </div>
+                <div class = "row">
+                    <div class="col-6">
+                        <label for="foreignCourseCredits">Transfer Course Credits</label>
+                        <input id="foreignCourseCredits"
+                               type="number"
+                               name="foreignCourseCredits"
+                               placeholder="Transfer Course Credits"
+                               class="form-control"/>
+                    </div>
+                    <div class="col-6">
+                        <label for="foreignCourseURL">Transfer Course URL</label>
+                        <input id="foreignCourseURL"
+                               type="text"
+                               name="foreignCourseURL"
+                               placeholder="Transfer Course URL"
+                               class="form-control"/>
+                    </div>
+                </div>
+                <div class = "row">
+                    <div class="col-6">
+                        <label for="foreignCourseDescription">Transfer Course Description</label>
+                        <input id="foreignCourseDescription"
+                               type="text"
+                               name="foreignCourseDescription"
+                               placeholder="Transfer Course Description"
+                               class="form-control"/>
+                    </div>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary ms-3">Request</button>
+        </form>
+    </div>
+    <script>
+      var deps = {{courses|safe}};
+      autocomplete(document.getElementById("uvaCourse"), deps);
+    </script>
+{% endblock content %}

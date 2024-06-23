@@ -1,0 +1,62 @@
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+{% extends "socialaccount/base.html" %}
+{% load socialaccount %}
+
+{% block head_title %}
+    Transfer Guide | Equivalency Results
+{% endblock %}
+{% block content %}
+    {% load static %}
+    <div class="container-fluid d-flex flex-column align-items-center text-center">
+        {% if equivalencies|length > 0 %}<h2 class="display-4 text-center mt-5 mb-4">Equivalency Results</h2>{% endif %}
+        {% if error_msg == "Invalid Course Format" %}
+            <p>Invalid Course Format.</p>
+        {% elif error_msg == "Not UVA Course" %}
+            <p>Not a UVA Course.</p>
+        {% elif error_msg == "No Course provided in GET headers" %}
+            <p>Invalid GET request headers</p>
+        {% elif equivalencies %}
+            <div class="table-responsive card w-75 mt-4">
+                <table class="table table-striped">
+                    <thead class="changecolor">
+                        <tr>
+                            <th scope="col">Transfer School</th>
+                            <th scope="col">UVA Course</th>
+                            <th scope="col">UVA Course Description</th>
+                            <th scope="col">Equivalent Course</th>
+                            <th scope="col">Equivalent Course Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for equivalence in equivalencies %}
+                            <tr>
+                                <td scope="row">{{ equivalence.foreign_course.foreign_school.name }}</td>
+                                <td scope="row">
+                                    <a href="{% url 'viewcourseinfo' equivalence.uva_course.department equivalence.uva_course.catalog_number %}">{{ equivalence.uva_course.department }} {{ equivalence.uva_course.catalog_number }}</a>
+                                </td>
+                                <td scope="row">{% if equivalence.uva_course.description != "No description." %}{{ equivalence.uva_course.description }}{% endif %}</td>
+                                <td scope="row">{{ equivalence.foreign_course.department }} {{ equivalence.foreign_course.catalog_number }}</td>
+                                <td scope="row">{{ equivalence.foreign_course.description }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination pt-3">
+                <span class="step-links">
+                    {% if equivalencies.has_previous %}
+                        <a href="?foreign_school_name={{ request.GET.foreign_school_name }}&foreign_course={{ request.GET.foreign_course }}&foreign_description={{ request.GET.foreign_description }}&foreign_credits={{ request.GET.foreign_credits }}&uva_course_description={{ request.GET.uva_course_description }}&uva_course_credits={{ request.GET.uva_course_credits }}&course={{ request.GET.course }}&page=1">&laquo; first</a>
+                        <a href="?foreign_school_name={{ request.GET.foreign_school_name }}&foreign_course={{ request.GET.foreign_course }}&foreign_description={{ request.GET.foreign_description }}&foreign_credits={{ request.GET.foreign_credits }}&uva_course_description={{ request.GET.uva_course_description }}&uva_course_credits={{ request.GET.uva_course_credits }}&course={{ request.GET.course }}&page={{ equivalencies.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="current">Page {{ equivalencies.number }} of {{ equivalencies.paginator.num_pages }}.</span>
+                    {% if equivalencies.has_next %}
+                        <a href="?foreign_school_name={{ request.GET.foreign_school_name }}&foreign_course={{ request.GET.foreign_course }}&foreign_description={{ request.GET.foreign_description }}&foreign_credits={{ request.GET.foreign_credits }}&uva_course_description={{ request.GET.uva_course_description }}&uva_course_credits={{ request.GET.uva_course_credits }}&course={{ request.GET.course }}&page={{ equivalencies.next_page_number }}">next</a>
+                        <a href="?foreign_school_name={{ request.GET.foreign_school_name }}&foreign_course={{ request.GET.foreign_course }}&foreign_description={{ request.GET.foreign_description }}&foreign_credits={{ request.GET.foreign_credits }}&uva_course_description={{ request.GET.uva_course_description }}&uva_course_credits={{ request.GET.uva_course_credits }}&course={{ request.GET.course }}&page={{ equivalencies.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+			<a href="{% url 'search' %}" role="button" class="btn btn-outline-dark my-4">Back to Search</a>
+        {% endif %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+{% extends "socialaccount/base.html" %}
+{% load socialaccount %}
+
+{% block head_title %}
+    Transfer Guide | Request History
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid d-flex flex-column align-items-center text-center">
+        <h2 class="display-4 text-center mt-5 mb-4">Requests History</h2>
+        {% if equivalencies %}
+        <div class="table-responsive card w-75">
+            <table class="table table-striped">
+                <tbody>
+                    <thead class="changecolor">
+                    <th>Request #</th>
+                      <th>UVA Course</th>
+                      <th>Transfer School</th>
+                      <th>Transfer Course</th>
+                      <th>Current Status</th>
+                    </thead>
+                    {% for request in equivalencies %}
+                        <tr>
+                            <td><a href="{% url 'viewrequest' request.id %}">{{forloop.counter }}</a></td>
+                            <td>{{request.uva_course.department}} {{request.uva_course.catalog_number}}</td>
+                            <td>{{request.foreign_school}}</td>
+                            <td>{{request.foreign_course_department}} {{request.foreign_course_catalog_number}}</td>
+                            {% if request.status == 'APPROVED' %}
+                                <td><p class="badge text-bg-success">Approved</p></td>
+                            {% elif request.status == 'UNDER_REVIEW' %}
+                                <td><p class="badge text-bg-warning">Under Review</p></td>
+                            {% else %}
+                                <td><p class="badge text-bg-danger">Denied</p></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p>No Prior Requests.</p>
+        {% endif %}
+    </div>
+{% endblock content %}

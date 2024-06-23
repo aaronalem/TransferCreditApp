@@ -1,0 +1,16 @@
+th{
+    width: 20%
+}
+
+.unstripe{
+    --bs-table-striped-bg: white;
+    border-color: white;
+}
+
+form{
+    margin-top: 20px;
+}
+
+.btns{
+    margin-top: 10px;
+}

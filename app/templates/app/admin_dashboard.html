@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+{% extends "socialaccount/base.html" %}
+{% load socialaccount %}
+
+{% block head_title %}
+    Transfer Guide | Admin Dashboard
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'admin_dashboard.css' %}">
+    <div class="container">
+    <h1 class="display-4 mt-3">Admin Dashboard</h1>
+    {% if user.is_authenticated %}
+        <p><strong>Welcome to your dashboard, {{ user.username }}!</strong></p>
+        <script src="" async defer></script>
+    {% endif %}
+        <div class="container-sm">
+            <h1 class="display-4">Unreviewed Equivalency Requests</h1>
+            {% if equivalency_requests %}
+                <div class="table-responsive card">
+                    <table class="table table-striped">
+                        <tbody>
+                            <thead class="changecolor">
+                                <th>Request #</th>
+                                <th>UVA Course</th>
+                                <th>Transfer School</th>
+                                <th>Transfer Course</th>
+                                <th>Description</th>
+                            </thead>
+                            {% for request in equivalency_requests %}
+                                <tr>
+                                    <td><a href="{% url 'viewrequest' request.id %}">{{forloop.counter }}</a></td>
+                                    <td>{{request.uva_course.department}} {{request.uva_course.catalog_number}}</a></td>
+                                    <td>{{request.foreign_school}}</td>
+                                    <td>{{request.foreign_course_department}} {{request.foreign_course_catalog_number}}</td>
+                                    <td>{{ request.foreign_course_description }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>No Unreviewed Transfer Equivalency Requests.</p>
+            {% endif %}
+            </div>
+        </div>
+{% endblock content %}
